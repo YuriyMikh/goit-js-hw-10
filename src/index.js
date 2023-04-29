@@ -43,7 +43,7 @@ function renderMarkup(countries) {
         country =>
           `<div class="js-country-list">
           <img class='js-flag' src="${country.flags.svg}" alt=""></img>
-          <li> ${country.name.common}</li>
+          <li> ${country.name.official}</li>
         </div>    
              `
       )
@@ -57,7 +57,7 @@ function renderMarkup(countries) {
           `
           <div class="js-country-list">
             <img class='js-flag' src="${country.flags.svg}" alt=""></img>
-            <li> ${country.name.common}</li>
+            <li> ${country.name.official}</li>
           </div>
           <li><span>Capital: </span><span>${country.capital}</span></li>
           <li><span>Population: </span><span>${country.population}</span></li>
