@@ -1,4 +1,5 @@
 export function fetchCountries(name) {
-  console.log('hello');
+  fetch('https://restcountries.com/v3.1/name/eesti')
+    .then(response => response.json())
+    .then(country => console.log(country));
 }
-
