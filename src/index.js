@@ -17,7 +17,7 @@ inputRef.addEventListener(
 
 function nameEnteredCountry(event) {
   enteredCountryName = event.target.value.trim();
-  fetchCountries(enteredCountryName).then(con => renderMarkup(con));
+  fetchCountries(enteredCountryName).then(con => renderMarkup(con)); //доработать имя переменной
 }
 
 function fetchCountries(name) {
@@ -25,19 +25,51 @@ function fetchCountries(name) {
     response.json()
   );
 }
+// https://restcountries.com/v3.1/${name}?fields=${name.official},${capital},${population},${flags.svg},${languages}
+// https://restcountries.com/v3.1/all?fields=name,capital,currencies
 
 function renderMarkup(countries) {
-  const eneteredCountries = countries
-    .map(
-      country =>
-        `<div class="js-country-list">
-          <img class='js-flag' src="${country.flags.png}" alt=""></img>
+    console.log(inputRef.value);
+    countryListRef.innerHTML = '';
+  if (countries.length > 10) {
+    Notiflix.Notify.info(
+      'Too many matches found. Please enter a more specific name.'
+    );
+    return;
+  } else if (countries.length > 2 && countries.length < 10) {
+    countryInfoRef.innerHTML = '';
+    const eneteredCountries = countries
+      .map(
+        country =>
+          `<div class="js-country-list">
+          <img class='js-flag' src="${country.flags.svg}" alt=""></img>
           <li> ${country.name.common}</li>
         </div>    
              `
-    )
-    .join('');
-  countryListRef.innerHTML = eneteredCountries;
+      )
+      .join('');
+    countryListRef.innerHTML = eneteredCountries;
+  } else if (countries.length === 1) {
+    countryListRef.innerHTML = '';
+    const eneteredCountries = countries
+      .map(
+        country =>
+          `
+          <div class="js-country-list">
+            <img class='js-flag' src="${country.flags.svg}" alt=""></img>
+            <li> ${country.name.common}</li>
+          </div>
+          <li><span>Capital: </span><span>${country.capital}</span></li>
+          <li><span>Population: </span><span>${country.population}</span></li>
+          <li><span>Languages: </span><span>${country.languages}</span></li>
+             `
+      )
+      .join('');
+    countryInfoRef.innerHTML = eneteredCountries;
+  }
+  // if (inputRef.value === '') {
+  // countryListRef.innerHTML = '';
+  // }
 }
 
 // .then(country => console.log(country))
