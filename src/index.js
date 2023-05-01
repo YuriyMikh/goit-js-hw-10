@@ -12,7 +12,15 @@ const countryInfoRef = document.querySelector('.country-info');
 inputRef.addEventListener('input', debounce(onInputSearch, DEBOUNCE_DELAY));
 
 function onInputSearch(event) {
-  return fetchCountries(event.target.value.trim())
+  const value = event.target.value.trim();
+  console.dir(value);
+    //проверка на пробелы. Если в поисковой строке пусто (или пробелы)- не отправляем GET-запрос
+  if (!value) {
+    clearInterfaceUI();
+    return;
+  }
+
+  return fetchCountries(value)
     .then(resultSearch => {
       if (resultSearch.length > 10)
         Notiflix.Notify.info(
@@ -56,7 +64,9 @@ function markupInfoCountry(data) {
        </div>
        <p>Capital: <span>${data.capital}</span></p>
        <p>Population: <span>${data.population}</span></p>
-       <p>Languages: <span>${Object.values(data.languages).join(', ')}</span></p>
+       <p>Languages: <span>${Object.values(data.languages).join(
+         ', '
+       )}</span></p>
       `
     )
     .join('');
