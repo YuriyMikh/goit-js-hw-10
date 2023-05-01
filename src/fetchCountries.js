@@ -6,10 +6,7 @@ const searchParams = new URLSearchParams({
 });
 
 export function fetchCountries(name) {
-
-  return fetch(
-    `${BASE_URL}${name}?${searchParams}`
-  ).then(response => {
+  return fetch(`${BASE_URL}${name}?${searchParams}`).then(response => {
     if (!response.ok) {
       return new Promise.reject();
     }
