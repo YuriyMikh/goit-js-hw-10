@@ -26,7 +26,7 @@ function onInputSearch(event) {
         Notiflix.Notify.info(
           'Too many matches found. Please enter a more specific name.'
         );
-      //если стран от 2 до 10 - показываем их на список (вызов функции markupListCountries())
+      //если стран от 2 до 10 - показываем их списком (вызов функции markupListCountries())
       if (resultSearch.length >= 2 && resultSearch.length <= 10) {
         markupListCountries(resultSearch);
       }
@@ -55,7 +55,7 @@ function markupListCountries(data) {
     .join('');
 }
 
-////функция отрисовки детализации страны
+//функция отрисовки детализации страны
 function markupInfoCountry(data) {
   countryListRef.innerHTML = '';
   countryInfoRef.innerHTML = data
@@ -79,7 +79,7 @@ function markupInfoCountry(data) {
     .join('');
 }
 
-//функция очистки интерфеса
+//функция очистки интерфейса
 function clearInterfaceUI() {
   countryListRef.innerHTML = '';
   countryInfoRef.innerHTML = '';
