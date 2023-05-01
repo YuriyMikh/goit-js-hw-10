@@ -13,22 +13,24 @@ inputRef.addEventListener('input', debounce(onInputSearch, DEBOUNCE_DELAY));
 
 function onInputSearch(event) {
   const value = event.target.value.trim();
-  console.dir(value);
-    //проверка на пробелы. Если в поисковой строке пусто (или пробелы)- не отправляем GET-запрос
+  //проверка на пробелы. Если в поисковой строке пусто (или пробелы)- не отправляем GET-запрос
   if (!value) {
     clearInterfaceUI();
     return;
   }
 
+  //если стран больше 10 - показываем нотификацию
   return fetchCountries(value)
     .then(resultSearch => {
       if (resultSearch.length > 10)
         Notiflix.Notify.info(
           'Too many matches found. Please enter a more specific name.'
         );
+      //если стран от 2 до 10 - показываем их на список (вызов функции markupListCountries())
       if (resultSearch.length >= 2 && resultSearch.length <= 10) {
         markupListCountries(resultSearch);
       }
+      //если страна одна - показываем ее детализацию (вызов функции markupInfoCountry())
       if (resultSearch.length === 1) {
         markupInfoCountry(resultSearch);
       }
@@ -39,74 +41,46 @@ function onInputSearch(event) {
     });
 }
 
+//функция отрисовки списка стран
 function markupListCountries(data) {
   countryInfoRef.innerHTML = '';
   countryListRef.innerHTML = data
     .map(
       element =>
-        `<li>
-          <img src="${element.flags.svg}" alt=""></img>
+        `<li class='js-country-list-item'>
+          <img class='js-flags-svg' src="${element.flags.svg}" alt=""></img>
           <p> ${element.name.official}</p>
         </li>`
     )
     .join('');
 }
 
+////функция отрисовки детализации страны
 function markupInfoCountry(data) {
   countryListRef.innerHTML = '';
   countryInfoRef.innerHTML = data
     .map(
       data =>
-        `
-        <div class="js-container">
-            <img src="${data.flags.svg}" alt="${data.flags.alt}"></img>
-            <p> ${data.name.official}</p>
+        `<div class='js-country-list-item'>
+           <img class='js-flags-svg' src="${data.flags.svg}" alt="${
+          data.flags.alt
+        }"></img>
+           <h2> ${data.name.official}</h2>
        </div>
-       <p>Capital: <span>${data.capital}</span></p>
-       <p>Population: <span>${data.population}</span></p>
-       <p>Languages: <span>${Object.values(data.languages).join(
-         ', '
-       )}</span></p>
+       <div>
+         <p class='js-key-title'>Capital: <span>${data.capital}</span></p>
+         <p class='js-key-title'>Population: <span>${data.population}</span></p>
+         <p class='js-key-title'>Languages: <span>${Object.values(data.languages).join(
+           ', '
+         )}</span></p>
+       </div>
       `
     )
     .join('');
 }
 
+//функция очистки интерфеса
 function clearInterfaceUI() {
   countryListRef.innerHTML = '';
   countryInfoRef.innerHTML = '';
 }
-// function renderMarkup(countries) {
-//   console.log(inputRef.value);
-//   if (countries.length > 2 && countries.length < 10) {
-//     countryInfoRef.innerHTML = '';
-//     const eneteredCountries = countries
-//       .map(
-//         country =>
-//           `<div class="js-country-list">
-//           <img class='js-flag' src="${country.flags.svg}" alt=""></img>
-//           <li> ${country.name.official}</li>
-//         </div>
-//              `
-//       )
-//       .join('');
-//     countryListRef.innerHTML = eneteredCountries;
-//   } else if (countries.length === 1) {
-//     countryListRef.innerHTML = '';
-//     const eneteredCountries = countries
-//       .map(
-//         country =>
-//           `
-//           <div class="js-container">
-//             <img src="${country.flags.svg}" alt=""></img>
-//             <p> ${country.name.official}</p>
-//           </div>
-//           <p>Capital: <span>${country.capital}</span></p>
-//           <p>Population: <span>${country.population}</span></p>
-//           <p>Languages: <span>${Object.values(country.languages)}</span></p>
-//              `
-//       )
-//       .join('');
-//     countryInfoRef.innerHTML = eneteredCountries;
-//   }
-// }

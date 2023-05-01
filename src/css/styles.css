@@ -24,37 +24,40 @@ li {
   margin-bottom: 16px;
 }
 
-.js-country-list {
-  display: flex;
-  margin: 10px;
-  font-size: 20px;
+.country-list {
+  margin: 0;
+  padding: 0;
 }
 
-.js-flag {
-  width: 30px;
-  height: auto;
-  margin-right: 5px;
-}
-
-.js-container {
+.js-country-list-item {
   display: flex;
+  align-items: center;
   height: 20px;
-}
-
-/* .js-one-country {
-  font-size: 22px;
-} */
-
-.js-span-list {
-  font-size: 18px;
-  margin: 10px;
-}
-
-p {
-  font-weight: 500;
+  margin-bottom: 20px;
   
 }
 
-img{
+.js-flags-svg {
+  max-height: 100%;
+  margin-right: 10px;
+  /* margin: 0; */
+}
+
+.js-key-title {
+  /* align-items: center; */
+  font-weight: bold;
+  ;
+}
+
+.js-key-title span {
+  font-weight: normal;
+}
+
+p {
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+img {
   max-height: 100%;
 }
